@@ -20,10 +20,12 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
         'token_update_date',
         'password_reset_token',
+        'rol',
     ];
 
     /**
@@ -59,5 +61,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function routine(){
         return $this->hasMany(Routine::class, 'user_id', 'id');
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class, 'user_id', 'id');
     }
 }

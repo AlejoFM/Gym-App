@@ -17,7 +17,7 @@ use App\Http\Controllers\TokenController;
 |
 */
 
-
+//TODO: Hacer los endpoints y controladores necesarios.
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
@@ -29,16 +29,21 @@ Route::group([
 });
     Route::group(['middleware' => 'auth.jwt'],function ($router) {
 
+    Route::post('/dashboard/users', [\App\Http\Controllers\UserController::class, 'store']);
+    Route::get('/dashboard/users', [\App\Http\Controllers\UserController::class, 'index']);
+    Route::get('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'show']);
+    Route::get('/dashboard/routine_week/{user_id}', [\App\Http\Controllers\RoutineWeeklyController::class, 'show']);
+    Route::get('/dashboard/routine_daily/{routine_id}', [\App\Http\Controllers\RoutineController::class, 'index']);
+
+    Route::get('dashboard/completeroutine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class,'index']);
+
+    Route::get('/routinetest/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
+
         Route::post('/logout', [TokenController::class, 'logout']);
         Route::post('/change_password', [TokenController::class, 'change_password']);
         Route::post('/forgot-password', [TokenController::class, 'sendPasswordResetEmail']);
         Route::post('/reset-password/{token}', [TokenController::class, 'resetPassword']);
 
-        Route::get('/projects', [ProjectController::class, 'index']);
-        Route::get('/projects/category', [CategoryController::class, 'index']);
-        Route::get('/projects/{id}/', [ProjectController::class, 'show']);
-
-        Route::post('/projects/category', [CategoryController::class, 'create']);
-        Route::post('/projects', [ProjectController::class, 'create']);
+        Route::get('/routine', [\App\Http\Controllers\RoutineController::class, 'index']);
     });
 

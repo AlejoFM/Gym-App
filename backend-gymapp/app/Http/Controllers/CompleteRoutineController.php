@@ -5,34 +5,35 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Routine;
 use App\Models\RoutinesWeekly;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
-class RoutineController extends Controller
+class CompleteRoutineController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(string $routine_id)
+    public function index(string $user_id)
     {
-        $user = auth()->user();
-        $routine_weekly = RoutinesWeekly::where('user_id', $user->id)->first();
+        try {
+            $user = User::find($user_id);
 
-        if (!$routine_weekly) {
-            return response()->json(['error' => 'No routine weekly found for the user'], 404);
+            if (!$user) {
+                return response()->json(['message' => 'Usuario no encontrado'], 404);
+            }
+
+            $routineWeekly = RoutinesWeekly::where('user_id', $user->id)->first();
+
+            if (!$routineWeekly) {
+                return response()->json(['message' => 'Usuario sin rutina semanal asignada'], 404);
+            }
+            $routineDaily = Routine::where('user_id', $user->id)->get();
+
+            return compact('user', 'routineWeekly', 'routineDaily');
+
+        } catch (\Exception $e) {
+            return $e;
         }
-
-        $routine_daily = Routine::find($routine_weekly->routine_id);
-
-        if (!$routine_daily) {
-            return response()->json(['error' => 'No routine found for the user'], 404);
-        }
-
-        if ($routine_daily->id == $routine_id) {
-            return Routine::where('user_id', $user->id)->get();
-        }
-
-        return "You have no routine available";
     }
 
     /**
@@ -40,7 +41,7 @@ class RoutineController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**

@@ -17,7 +17,11 @@ class MembershipFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'membership_type' => $this->faker->word,
+            'membership_cost' => $this->faker->randomNumber(2),
+            'payment_date' => $this->faker->dateTime(),
+            'expiry_date' => $this->faker->dateTimeBetween('+1 month', '+1 year'),
+            'user_id' => rand(1,9),
         ];
     }
 }

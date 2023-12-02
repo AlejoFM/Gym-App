@@ -45,7 +45,7 @@ class TokenController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
-            'admin' => $user,
+            'user' => $user,
             'token' => $token,
         ]);
     }
@@ -103,7 +103,7 @@ class TokenController extends Controller
 
     public function resetPassword(Request $request, $token)
     {
-        $user = Admin::where('password_reset_token', $token)->first();
+        $user = User::where('password_reset_token', $token)->first();
 
         if (!$user) {
             return response()->json(['message' => 'Token no válido'], 400);

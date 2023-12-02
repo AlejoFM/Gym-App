@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Admin;
+use App\Http\Controllers\Controller;
+use App\Models\RoutinesWeekly;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class AdminController extends Controller
+class RoutineWeeklyController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return User::all();
+        //
     }
 
     /**
@@ -27,15 +28,22 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Admin $admin)
+    public function show(string $user_id)
     {
-        //
+        $user = User::find($user_id);
+
+        if (!$user) {
+            return response()->json(['error' => 'Usuario no encontrado'], 404);
+        }
+
+        return RoutinesWeekly::where('user_id', $user->id)->get();
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -43,7 +51,7 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy(string $id)
     {
         //
     }

@@ -16,8 +16,10 @@ class Routine extends Model
     public function exercise(){
         return $this->hasMany(Exercise::class, 'exercise_id', 'id');
     }
-
     public function trainingVolumes(){
         return $this->hasMany(TrainingVolume::class, 'training_volume_id', 'id');
+    }
+    public function routinesWeekly(){
+        return $this->belongsTo(RoutinesWeekly::class, 'routine_id', 'id');
     }
 }

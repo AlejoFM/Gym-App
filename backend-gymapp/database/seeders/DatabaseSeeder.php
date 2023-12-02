@@ -5,8 +5,10 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Category;
 use App\Models\Exercise;
+use App\Models\Membership;
 use App\Models\Project;
 use App\Models\Routine;
+use App\Models\RoutinesWeekly;
 use App\Models\TrainingVolume;
 use Illuminate\Database\Seeder;
 
@@ -24,12 +26,10 @@ class DatabaseSeeder extends Seeder
              'rol' => strtolower('Admin'),
          ]);
 
-         Category::factory(4)->create();
-         Project::factory(10)->create();
-
+         Membership::factory(10)->create();
          Exercise::factory(4)->create();
          TrainingVolume::factory(4)->create();
          Routine::factory(9)->create();
-
+         RoutinesWeekly::factory(4)->create();
     }
 }
