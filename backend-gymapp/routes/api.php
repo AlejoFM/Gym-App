@@ -37,6 +37,9 @@ Route::group([
 
     Route::get('dashboard/completeroutine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class,'index']);
 
+    Route::get('dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'index']);
+    Route::post('dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'store']);
+
     Route::get('/routinetest/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
 
         Route::post('/logout', [TokenController::class, 'logout']);

@@ -10,7 +10,7 @@ class Exercise extends Model
     use HasFactory;
     protected $fillable = ["name", "muscular_group"];
 
-    public function training_volume(){
+    public function trainingVolume(){
         return $this->hasMany(TrainingVolume::class, 'exercise_id', 'id');
     }
 
