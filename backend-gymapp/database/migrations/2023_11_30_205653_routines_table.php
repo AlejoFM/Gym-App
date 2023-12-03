@@ -15,11 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('train_day');
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('exercise_id');
-            $table->unsignedBigInteger('training_volume_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('exercise_id')->references('id')->on('exercises');
-            $table->foreign('training_volume_id')->references('id')->on('training_volumes');
             $table->timestamps();
         });
     }

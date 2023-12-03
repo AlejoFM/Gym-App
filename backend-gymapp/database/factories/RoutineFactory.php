@@ -19,8 +19,6 @@ class RoutineFactory extends Factory
         return [
             "train_day" => fake()->dayOfWeek,
             "user_id" => rand(1,2),
-            "exercise_id" => rand(1,4),
-            "training_volume_id" => rand(1,4),
         ];
     }
 }

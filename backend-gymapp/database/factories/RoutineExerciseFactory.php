@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class RoutinesWeeklyFactory extends Factory
+class routineExerciseFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,12 @@ class RoutinesWeeklyFactory extends Factory
     public function definition(): array
     {
         return [
-            "user_id" => rand(1,2),
-            "routine_id" => rand(1,2),
+            "routine_id" => rand(1,9),
+            "exercise_id" => rand(1,8),
+            "volume_id" => rand(1,4),
+            "user_id" => rand(1,4),
         ];
+
+
     }
 }

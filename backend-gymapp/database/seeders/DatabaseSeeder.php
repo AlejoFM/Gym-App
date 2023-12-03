@@ -8,6 +8,7 @@ use App\Models\Exercise;
 use App\Models\Membership;
 use App\Models\Project;
 use App\Models\Routine;
+use App\Models\RoutineExercise;
 use App\Models\RoutinesWeekly;
 use App\Models\TrainingVolume;
 use Illuminate\Database\Seeder;
@@ -30,6 +31,6 @@ class DatabaseSeeder extends Seeder
          Exercise::factory(4)->create();
          TrainingVolume::factory(4)->create();
          Routine::factory(9)->create();
-         RoutinesWeekly::factory(4)->create();
+         RoutineExercise::factory(4)->create();
     }
 }

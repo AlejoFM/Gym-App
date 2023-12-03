@@ -40,7 +40,12 @@ class RoutineController extends Controller
      */
     public function store(Request $request)
     {
+        $routine = new Routine();
+        $routine->train_day = $request->train_day;
+        $routine->user_id = $request->user_id;
+        $routine->save();
 
+        return "User routine created succesfully";
     }
 
     /**

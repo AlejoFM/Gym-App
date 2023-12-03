@@ -34,7 +34,9 @@ class LoggedInValidation
 
             return response()->json(['error' => 'Fecha de token inválida']);
         } catch (JWTException $e) {
+            \Log::error('Error al manejar el token JWT: ' . $e->getMessage());
         }
-            return response()->json(['message' => 'No tienes la sesión iniciada'], 401);
+
+        return response()->json(['message' => 'No tienes la sesión iniciada'], 401);
     }
 }
