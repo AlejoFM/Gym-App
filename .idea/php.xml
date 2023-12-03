@@ -250,6 +250,8 @@
       <path value="$PROJECT_DIR$/backend-gymapp/vendor/psr/cache" />
       <path value="$PROJECT_DIR$/backend-gymapp/vendor/psr/event-dispatcher" />
       <path value="$PROJECT_DIR$/backend-gymapp/vendor/laravel/tinker" />
+      <path value="$PROJECT_DIR$/backend-gymapp/vendor/spatie/enum" />
+      <path value="$PROJECT_DIR$/backend-gymapp/vendor/spatie/laravel-enum" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.2">

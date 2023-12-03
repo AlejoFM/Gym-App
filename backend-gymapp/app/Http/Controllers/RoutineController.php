@@ -35,6 +35,20 @@ class RoutineController extends Controller
         return "You have no routine available";
     }
 
+    public function myroutine(){
+
+        $user = auth()->user();
+        $routines = $user->load('routine.routineExercise');
+        if ($routines->routine->isNotEmpty()) {
+            return response()->json([
+                'user' => $user,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Usuario sin rutina asignada',
+            ], 404);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */

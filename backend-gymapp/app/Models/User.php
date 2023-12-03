@@ -62,7 +62,7 @@ class User extends Authenticatable implements JWTSubject
     public function routine(){
         return $this->hasMany(Routine::class, 'user_id', 'id');
     }
-    public function routineExercises()
+    public function routineExercise()
     {
         return $this->hasMany(RoutineExercise::class, 'user_id');
     }

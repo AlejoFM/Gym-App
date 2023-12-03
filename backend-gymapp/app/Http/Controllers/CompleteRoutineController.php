@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoutineDaysEnums;
 use App\Http\Controllers\Controller;
 use App\Models\Exercise;
 use App\Models\Routine;
@@ -10,6 +11,7 @@ use App\Models\RoutinesWeekly;
 use App\Models\TrainingVolume;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class CompleteRoutineController extends Controller
@@ -63,10 +65,9 @@ class CompleteRoutineController extends Controller
     public function generateRoutine(Request $request){
 
         $volume = new TrainingVolume();
-        $routine = new Routine();
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'training_day' => 'required',
+            'training_day' => ['required', Rule::enum(RoutineDaysEnums::class)],
             'exercise_id' => 'required',
             'exercise_repetitions' => 'required',
             'exercise_series' => 'required',
@@ -75,6 +76,7 @@ class CompleteRoutineController extends Controller
         ]);
         $data = $request->only('user_id','training_day','exercise_id', 'exercise_repetitions', 'exercise_series');
         $user = User::find($data['user_id']);
+        $routine = Routine::firstOrNew([ 'user_id'=>$user->id, 'train_day' => $data['training_day']]);
         $exercise = Exercise::find($data['exercise_id']);
 
         $token = JWTAuth::getToken();

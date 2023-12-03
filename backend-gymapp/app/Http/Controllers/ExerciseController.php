@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Exercise;
 use App\Models\Routine;
-use App\Models\RoutineExercise;
 use App\Models\TrainingVolume;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -32,29 +31,17 @@ class ExerciseController extends Controller
      */
     public function store(Request $request)
     {
-        $exercise = new Exercise();
-        $this->validate($request,[
-            'name' => 'required',
+        $request->validate([
+            'name' => 'required|unique:exercises',
             'muscular_group' => 'required',
-
         ]);
-        $data = $request->only('name', 'muscular_group');
-        $token = JWTAuth::getToken();
-        $admin = JWTAuth::parseToken()->toUser($token);
-        if ($admin->can('create', Exercise::class)) {
-            $exercise = Exercise::firstOrNew([
-                'name' => $data['exercise_name'],
-                'muscular_group' => $data['exercise_group'],
-            ]);
-        }else{
-            abort(401);
-        }
 
-        return ([
-            'data' => [
-                'exercise_data' => $exercise,
-            ]
-    ]);
+        $exercise = Exercise::create([
+            'name' => $request->input('name'),
+            'muscular_group' => $request->input('muscular_group'),
+        ]);
+
+        return response()->json(['message' => 'Exercise created successfully', 'exercise' => $exercise], 201);
     }
 
     /**

@@ -21,7 +21,7 @@ class MembershipFactory extends Factory
             'membership_cost' => $this->faker->randomNumber(2),
             'payment_date' => $this->faker->dateTime(),
             'expiry_date' => $this->faker->dateTimeBetween('+1 month', '+1 year'),
-            'user_id' => rand(1,9),
+            'user_id' => rand(1,4),
         ];
     }
 }

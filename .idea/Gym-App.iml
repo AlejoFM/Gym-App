@@ -131,6 +131,8 @@
       <excludeFolder url="file://$MODULE_DIR$/backend-gymapp/vendor/vlucas/phpdotenv" />
       <excludeFolder url="file://$MODULE_DIR$/backend-gymapp/vendor/voku/portable-ascii" />
       <excludeFolder url="file://$MODULE_DIR$/backend-gymapp/vendor/webmozart/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/backend-gymapp/vendor/spatie/enum" />
+      <excludeFolder url="file://$MODULE_DIR$/backend-gymapp/vendor/spatie/laravel-enum" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory(10)->create();
+        \App\Models\User::factory(4)->create();
          \App\Models\User::factory()->create([
              'name' => 'Test User',
              'email' => 'test@example.com',
@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
          ]);
 
          Membership::factory(10)->create();
-         Exercise::factory(4)->create();
+         Exercise::factory(8)->create();
          TrainingVolume::factory(4)->create();
          Routine::factory(9)->create();
          RoutineExercise::factory(4)->create();

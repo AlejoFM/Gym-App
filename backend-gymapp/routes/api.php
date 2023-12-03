@@ -18,6 +18,7 @@ use App\Http\Controllers\TokenController;
 */
 
 //TODO: Hacer los endpoints y controladores necesarios.
+//TODO: Hacer el endpoint y la funcion del controller para que el usuario pueda ver su rutina.
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
@@ -46,6 +47,7 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
 
     Route::get('/routinetest/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
 
+    Route::get('/myroutine', [\App\Http\Controllers\RoutineController::class, 'myroutine']);
     Route::post('/logout', [TokenController::class, 'logout']);
     Route::post('/change_password', [TokenController::class, 'change_password']);
     Route::post('/forgot-password', [TokenController::class, 'sendPasswordResetEmail']);

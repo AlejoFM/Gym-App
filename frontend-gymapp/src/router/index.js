@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router"
-import projects from "@/components/projects.vue";
 import login from "@/components/login.vue";
 
 const router = createRouter({
@@ -9,14 +8,6 @@ const router = createRouter({
             path: '/login',
             name: 'login',
             component: login
-        },
-        {
-            path: '/projects',
-            name: 'projects',
-            component: projects,
-            meta: {
-                requiresAuth: true,
-            },
         },
     ]
 })

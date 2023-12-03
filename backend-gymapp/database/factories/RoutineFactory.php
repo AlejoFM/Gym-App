@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\RoutineDaysEnums;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class RoutineFactory extends Factory
     public function definition(): array
     {
         return [
-            "train_day" => fake()->dayOfWeek,
+            "train_day" => RoutineDaysEnums::cases()[rand(0,6)]->value,
             "user_id" => rand(1,2),
         ];
     }
