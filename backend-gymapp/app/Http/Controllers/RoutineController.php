@@ -35,13 +35,18 @@ class RoutineController extends Controller
         return "You have no routine available";
     }
 
-    public function myroutine(){
-
+    public function myroutine()
+    {
         $user = auth()->user();
-        $routines = $user->load('routine.routineExercise');
-        if ($routines->routine->isNotEmpty()) {
+
+        // Cargar las relaciones routine y routineExercise directamente
+        $user->load(['routine.routineExercise.exercise', 'routine.routineExercise.volume']);
+
+        $routines = $user->routine;
+
+        if ($routines->isNotEmpty()) {
             return response()->json([
-                'user' => $user,
+                'user' => $routines,
             ]);
         } else {
             return response()->json([
@@ -49,6 +54,7 @@ class RoutineController extends Controller
             ], 404);
         }
     }
+
     /**
      * Store a newly created resource in storage.
      */

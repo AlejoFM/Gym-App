@@ -22,7 +22,7 @@ class RoutineExercise extends Model
 
     public function exercise()
     {
-        return $this->belongsTo(Exercise::class, 'exercise_id');
+        return $this->belongsTo(Exercise::class, 'exercise_id', 'id');
     }
 
     public function volume()
@@ -34,4 +34,5 @@ class RoutineExercise extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
 }

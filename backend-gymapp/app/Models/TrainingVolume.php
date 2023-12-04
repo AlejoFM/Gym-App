@@ -17,4 +17,5 @@ class TrainingVolume extends Model
     {
         return $this->belongsTo(Routine::class, 'routine_id', 'id');
     }
+
 }
