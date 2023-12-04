@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>Rutina del Usuario</h2>
+      <template v-for="routine in routines" :key="routine.id">
     <table>
       <thead>
       <tr>
@@ -11,21 +12,20 @@
       </tr>
       </thead>
       <tbody>
-      <template v-for="routine in routines" :key="routine.id">
         <tr v-for="(routine_exercise_info, index) in routine.routine_exercise" :key="routine_exercise_info.id">
           <template v-if="index === 0 || routine_exercise_info.routine_id !== routine.routine_exercise[index - 1].routine_id">
             <td>{{ routine.train_day }}</td>
           </template>
           <template v-else>
-            <td></td> <!-- Campo vacío si el día se repite -->
+            <td></td>
           </template>
           <td>{{ routine_exercise_info.exercise.name }}</td>
           <td>{{ routine_exercise_info.volume.repetitions }}</td>
           <td>{{ routine_exercise_info.volume.series }}</td>
         </tr>
-      </template>
       </tbody>
     </table>
+      </template>
   </div>
 </template>
 
@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       routines: [],
-      exercise: 0,
     };
   },
   mounted() {
@@ -49,9 +48,7 @@ export default {
         this.routines = response.data.user;
 
         console.log(this.routines);
-        if (this.routines.train_day){
-          exercise++;
-        }
+
       } catch (error) {
         console.error('Error al obtener la rutina:', error);
       }

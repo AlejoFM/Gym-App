@@ -28,8 +28,9 @@ export default {
     const user = ref([]);
 
     if (localStorage.getItem("token") != null){
-      router.push('/routines');
+      router.push('/');
     }
+
     const login = () => {
       axios.post('http://127.0.0.1:8000/api/login', { email: email.value, password: password.value })
         .then((response) => {
@@ -38,6 +39,7 @@ export default {
               user.value = response.data;
               console.log('User:', user.value);
               localStorage.setItem("token", response.data);
+              router.push('/');
             } else {
               console.error('Invalid API response - No data:', response);
             }
@@ -56,8 +58,10 @@ export default {
       email,
       password,
       login,
+
     };
   },
 };
+
 </script>
 

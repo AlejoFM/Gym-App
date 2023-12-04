@@ -17,7 +17,7 @@ class routineExerciseFactory extends Factory
     public function definition(): array
     {
         return [
-            "routine_id" => rand(1,9),
+            "routine_id" => rand(1,4),
             "exercise_id" => rand(1,8),
             "volume_id" => rand(1,4),
             "user_id" => rand(1,4),
