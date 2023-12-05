@@ -13,26 +13,14 @@ class RoutineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $routine_id)
+    public function index(string $user_id)
     {
-        $user = auth()->user();
-        $routine_weekly = RoutinesWeekly::where('user_id', $user->id)->first();
-
-        if (!$routine_weekly) {
-            return response()->json(['error' => 'No routine weekly found for the user'], 404);
-        }
-
-        $routine_daily = Routine::find($routine_weekly->routine_id);
-
-        if (!$routine_daily) {
-            return response()->json(['error' => 'No routine found for the user'], 404);
-        }
-
-        if ($routine_daily->id == $routine_id) {
-            return Routine::where('user_id', $user->id)->get();
-        }
-
-        return "You have no routine available";
+        $user_routine = Routine::where('user_id', $user_id)->get();
+        if (!$user_routine){
+            return "You have no routine available";
+        };
+        $user_routine->load(['routineExercise.exercise', 'routineExercise.volume']);
+        return $user_routine;
     }
 
     public function myroutine()

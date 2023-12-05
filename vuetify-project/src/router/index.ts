@@ -4,23 +4,23 @@ import login from "@/views/Login.vue";
 import routines from "@/views/Routines.vue";
 import dashboard from "@/views/Dashboard.vue"
 import dashboardClientInfo from "@/components/dashboardClientInfo.vue";
+import Unauthorized from "@/views/Unauthorized.vue";
+import Notfound from "@/views/Notfound.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/login',
-      name: 'login',
-      component: login,
-      meta: {
-        requiresAuth: false,
-      }
+      path: '/:catchAll(.*)',
+      redirect: '/notfound',
     },
+    { path: '/login', name: 'login', component: login, meta: {requiresAuth: false,}},
     {
       path:'/',
       name: 'home',
       component: routines,
       meta: {
         requiresAuth: true,
+        isAdmin: false,
       }
     },
     {
@@ -29,32 +29,62 @@ const router = createRouter({
       component: dashboard,
       meta:{
         requiresAuth: true,
+        isAdmin : true,
       }
     },
     {
-      path:'/userRoutine',
-      name: 'userRoutine',
+      path:'/dashboard/users/:user_id',
+      name: 'user-routine',
       component: dashboardClientInfo,
       meta:{
         requiresAuth: true,
+        isAdmin: true,
       }
-    }
+    },
+    {
+      path: '/unauthorized',
+      name: 'unauthorized',
+      component: Unauthorized,
+      meta:{
+        requiresAuth: false,
+        isAdmin: false,
+      }
+    },
+    {
+      path: '/notfound',
+      name: 'notfound',
+      component: Notfound,
+      meta:{
+        requiresAuth: false,
+        isAdmin: false,
+      }
+    },
   ]
 });
 router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth) {
     const token = localStorage.getItem('token');
-    if (token) {
-      // User is authenticated, proceed to the route
-      next();
-    } else {
-      // User is not authenticated, redirect to login
+    const user = localStorage.getItem('user');
+
+    if (!token || !user) {
       next('/login');
+      return;
+    }
+    const userRole = JSON.parse(user).rol;
+
+    if (userRole !== "admin" && to.meta.isAdmin === true) {
+      if (to.path.endsWith('/unauthorized')) {
+        next();
+      } else {
+        next('/unauthorized')
+      }
+    } else {
+      next();
     }
   } else {
-    // Non-protected route, allow access
     next();
   }
 });
+
 
 export default router

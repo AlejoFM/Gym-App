@@ -22,39 +22,16 @@ class CompleteRoutineController extends Controller
     // TODO: Que solo el usuario autenticado con el id, pueda ver su contenido.
     public function index(string $user_id)
     {
+
         try {
-            $user = User::find($user_id);
-
-            if (!$user) {
-                return response()->json(['message' => 'Usuario no encontrado'], 404);
-            }
-
-            $routineAllInfo = $user->routineExercises;
-
-
-            if ($routineAllInfo->isEmpty()) {
-                return response()->json(['message' => 'Usuario sin rutina asignada'], 404);
-            }
-
-            $exerciseIds = $routineAllInfo->pluck('exercise_id');
-            $volumeIds = $routineAllInfo->pluck('volume_id');
-
-            $exercises = Exercise::whereIn('id', $exerciseIds)->get();
-            $exercise_volumen = TrainingVolume::whereIn('id', $volumeIds)->get();
-
-            $responseData = [
-                'user' => $user,
-                'routineAllInfo' => $routineAllInfo,
-                'exercises' => $exercises,
-                'exercise_volumen' => $exercise_volumen,
-            ];
-
-            return response()->json(['user' => $responseData['user'], 'exercises' => $responseData['exercises']
-                , 'repetitions' => $responseData['exercise_volumen']->pluck('repetitions')
-                , 'series' => $responseData['exercise_volumen']->pluck('series')]);
-
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Error en el servidor'], 500);
+            $user_routine = Routine::where('user_id', $user_id)->get();
+            if (!$user_routine){
+                return "You have no routine available";
+            };
+            $user_routine->load(['routineExercise.exercise', 'routineExercise.volume']);
+            return $user_routine;
+        }catch (\Exception $e){
+            return $e;
         }
     }
 
@@ -152,27 +129,9 @@ class CompleteRoutineController extends Controller
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+    public function updateRoutine(Request $request, $user_id){
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $user = User::findOrFail($user_id);
+        $routine = $user->routine();
     }
 }

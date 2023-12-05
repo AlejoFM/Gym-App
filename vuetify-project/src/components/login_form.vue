@@ -36,9 +36,11 @@ export default {
         .then((response) => {
           try {
             if (response.data) {
-              user.value = response.data;
-              console.log('User:', user.value);
-              localStorage.setItem("token", response.data);
+              const token = response.data.token;
+              const user = response.data.user;
+              localStorage.setItem('token', token);
+              localStorage.setItem('user', JSON.stringify(user));
+
               router.push('/');
             } else {
               console.error('Invalid API response - No data:', response);

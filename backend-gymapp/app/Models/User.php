@@ -55,9 +55,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
-    public function projects(){
-        return $this->hasMany(Project::class, 'user_id', 'id');
-    }
 
     public function routine(){
         return $this->hasMany(Routine::class, 'user_id', 'id');

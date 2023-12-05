@@ -23,4 +23,5 @@ class Routine extends Model
     public function routineExercise(){
         return $this->hasMany(RoutineExercise::class, 'routine_id', 'id');
     }
+
 }

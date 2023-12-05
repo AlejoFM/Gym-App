@@ -4,6 +4,7 @@ import router from '../router/index';
 axios.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -20,8 +21,7 @@ axios.interceptors.response.use(
     },
     (error) => {
         if (error.response.status === 401) {
-            localStorage.removeItem("token");
-            router.push('/login');
+            router.push('unauthorized');
         }
         return Promise.reject(error);
     }

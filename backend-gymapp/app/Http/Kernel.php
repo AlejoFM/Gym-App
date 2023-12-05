@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Controllers\TokenController;
+use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\LoggedInValidation;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Http\Middleware\HandleCors;
@@ -71,5 +72,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
         'auth.jwt' => LoggedInValidation::class,
+        'auth.admin' => IsAdmin::class,
     ];
 }

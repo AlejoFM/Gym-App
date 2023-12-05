@@ -63,7 +63,8 @@ class TokenController extends Controller
         }catch (JWTException $e){
             return $e;
         }
-        return $token;
+        return response()->json(['user' => $user, 'token' => $token]);
+
     }
 
     public function change_password(Request $request){

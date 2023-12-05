@@ -1,5 +1,5 @@
 <template>
-  <router-link to="userRoutine" class="card-link">
+  <router-link :to="'dashboard/users/'+userId" class="card-link">
   <v-card>
     <v-card-title><v-icon>{{ icon }}</v-icon>{{ title }}</v-card-title>
     <v-card-subtitle>
@@ -21,11 +21,5 @@ export default {
     value: [String, Number],
     userId: Number,
   },
-  computed: {
-    userRoutine(){
-      return `dashboard/users/${this.userId}`;
-    }
-  }
-
 };
 </script>

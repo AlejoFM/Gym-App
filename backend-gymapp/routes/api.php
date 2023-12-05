@@ -18,7 +18,8 @@ use App\Http\Controllers\TokenController;
 */
 
 //TODO: Hacer los endpoints y controladores necesarios.
-//TODO: Hacer el endpoint y la funcion del controller para que el usuario pueda ver su rutina.
+// TODO: Mejorar la tabla de rutinas para editar para los usuarios, utilizar una tabla en vez de un data visualizer.
+
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
@@ -30,11 +31,13 @@ Route::group([
 });
 Route::group(['middleware' => 'auth.jwt'],function ($router) {
 
+    Route::group(['middleware' => 'auth.admin'], function ($router){
     Route::post('/dashboard/users', [\App\Http\Controllers\UserController::class, 'store']);
     Route::get('/dashboard/users', [\App\Http\Controllers\UserController::class, 'index']);
     Route::get('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'show']);
 
-    Route::get('/dashboard/routine_daily/{routine_id}', [\App\Http\Controllers\RoutineController::class, 'index']);
+    Route::get('/dashboard/user_routine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
+    Route::post('/dashboard/user_routine/{routine_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'updateRoutine']);
     Route::post('/dashboard/routine_daily', [\App\Http\Controllers\RoutineController::class, 'store']);
 
     Route::get('/dashboard/completeroutine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class,'index']);
@@ -44,7 +47,7 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
 
     Route::get('/dashboard/exercise/volume/{exercise_id}', [\App\Http\Controllers\TrainingVolumeController::class, 'index']);
     Route::post('/dashboard/exercise/volume', [\App\Http\Controllers\TrainingVolumeController::class, 'store']);
-
+    });
     Route::get('/routinetest/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
 
     Route::get('/myroutine', [\App\Http\Controllers\RoutineController::class, 'myroutine']);
