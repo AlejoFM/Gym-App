@@ -1,10 +1,10 @@
 import axios from 'axios';
 import router from '../router/index';
 
+declare module '*.vue';
 axios.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('token');
-        const user = localStorage.getItem('user');
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -26,4 +26,4 @@ axios.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-export default axios;
+export default axios

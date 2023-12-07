@@ -40,8 +40,11 @@ export default {
               const user = response.data.user;
               localStorage.setItem('token', token);
               localStorage.setItem('user', JSON.stringify(user));
-
-              router.push('/');
+              if (user.rol === "admin"){
+                router.push('/dashboard');
+              }else{
+                router.push('/');
+              }
             } else {
               console.error('Invalid API response - No data:', response);
             }

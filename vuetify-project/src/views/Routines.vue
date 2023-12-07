@@ -1,5 +1,8 @@
 <template>
-  <div>
+  <v-app>
+    <v-layout>
+      <navbar></navbar>
+      <v-main>
     <h2>Rutina del Usuario</h2>
       <template v-for="routine in routines" :key="routine.id">
     <table>
@@ -26,11 +29,16 @@
       </tbody>
     </table>
       </template>
-  </div>
+      </v-main>
+    </v-layout>
+  </v-app>
 </template>
 
 <script>
+import Navbar from "@/components/navbar.vue";
+
 export default {
+  components: {Navbar},
   data() {
     return {
       routines: [],

@@ -13,7 +13,7 @@ import App from './App.vue'
 // Composables
 import { createApp } from 'vue'
 import router from "../src/router/index";
-import axios from "/src/utils/axios";
+import axios from "../src/utils/index";
 axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
 
 const app = createApp(App)

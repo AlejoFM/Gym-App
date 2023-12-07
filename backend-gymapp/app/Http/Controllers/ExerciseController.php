@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Exercise;
 use App\Models\Routine;
+use App\Models\RoutineExercise;
 use App\Models\TrainingVolume;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -55,10 +57,16 @@ class ExerciseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $exercises = $request->input('updatedExercises');
+        foreach ($exercises as $exercise){
+            RoutineExercise::where(['id' => $exercise['routineExerciseId']])->first()->update(['exercise_id' => $exercise['updatedExerciseId']]);
+        }
+        return response()->json(['data' => $exercises]);
+
     }
+
 
     /**
      * Remove the specified resource from storage.

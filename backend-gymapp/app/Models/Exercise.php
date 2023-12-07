@@ -17,5 +17,8 @@ class Exercise extends Model
     public function routineExercise(){
         return $this->hasMany(RoutineExercise::class, 'exercise_id', 'id');
     }
+    public function trainingVolume(){
+        return $this->belongsTo(TrainingVolume::class, 'exercise_id');
+    }
 
 }

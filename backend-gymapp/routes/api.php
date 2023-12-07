@@ -37,13 +37,14 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
     Route::get('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'show']);
 
     Route::get('/dashboard/user_routine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
-    Route::post('/dashboard/user_routine/{routine_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'updateRoutine']);
+    Route::put('/dashboard/user_routine/{routine_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'updateRoutine']);
     Route::post('/dashboard/routine_daily', [\App\Http\Controllers\RoutineController::class, 'store']);
 
     Route::get('/dashboard/completeroutine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class,'index']);
     Route::post('/dashboard/generateroutine/', [\App\Http\Controllers\CompleteRoutineController::class,'generateRoutine']);
     Route::get('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'index']);
     Route::post('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'store']);
+    Route::put('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'update']);
 
     Route::get('/dashboard/exercise/volume/{exercise_id}', [\App\Http\Controllers\TrainingVolumeController::class, 'index']);
     Route::post('/dashboard/exercise/volume', [\App\Http\Controllers\TrainingVolumeController::class, 'store']);
