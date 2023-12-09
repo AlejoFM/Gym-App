@@ -11,7 +11,7 @@ class TrainingVolume extends Model
     protected $fillable = ["series", "repetitions"];
 
     public function RoutineExercise(){
-        return $this->belongsTo(Exercise::class, "exercise_id");
+        return $this->belongsTo(RoutineExercise::class, "volume_id");
     }
 
 }

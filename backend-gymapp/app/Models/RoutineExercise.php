@@ -27,10 +27,10 @@ class RoutineExercise extends Model
 
     public function TrainingVolume()
     {
-        return $this->hasOne(TrainingVolume::class, 'routine_exercise_id');
+        return $this->belongsTo(TrainingVolume::class, 'volume_id');
     }
 
-    public function user()
+    public function User()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

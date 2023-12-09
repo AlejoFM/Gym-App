@@ -10,6 +10,7 @@
         "laravel/breeze": "^1.26",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
+        "laravel/telescope": "^4.17",
         "laravel/tinker": "^2.8",
         "mailersend/laravel-driver": "^2.3",
         "spatie/laravel-enum": "^3.0",

@@ -62,7 +62,7 @@ class ExerciseController extends Controller
         $exercises = $request->input('updatedExercises');
         foreach ($exercises as $exercise){
             RoutineExercise::where(['id' => $exercise['routineExerciseId']])->first()->update(['exercise_id' => $exercise['updatedExerciseId']]);
-            TrainingVolume::where(['exercise_id' => $exercise['updatedExerciseId']])->first()->update(['repetitions' => $exercise['updatedExerciseRepetitions'], 'series' => $exercise['updatedExerciseSeries']]);
+            TrainingVolume::where(['id' => $exercise['updatedExerciseVolumeId']])->first()->update(['repetitions' => $exercise['updatedExerciseRepetitions'], 'series' => $exercise['updatedExerciseSeries']]);
         }
         return response()->json(['data' => $exercises]);
 

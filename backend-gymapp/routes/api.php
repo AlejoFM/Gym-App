@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
     Route::get('/dashboard/users', [\App\Http\Controllers\UserController::class, 'index']);
     Route::get('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'show']);
 
+    //TODO: FINALIZAR LOS ENDPOINTS DE EDICION
     Route::get('/dashboard/user_routine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
     Route::put('/dashboard/user_routine/{routine_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'updateRoutine']);
     Route::post('/dashboard/routine_daily', [\App\Http\Controllers\RoutineController::class, 'store']);

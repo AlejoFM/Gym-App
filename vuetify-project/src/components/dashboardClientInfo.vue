@@ -25,8 +25,8 @@
           <td>
             <v-select v-model="selectedExercise[routine_exercise_info.id]" :items="exerciseNames" item-title="name" item-value="id"></v-select>
           </td>
-          <td>  <v-text-field v-model="exerciseVolume[routine_exercise_info.id].repetitions" ></v-text-field> </td>
-          <td>  <v-text-field v-model="exerciseVolume[routine_exercise_info.id].series" ></v-text-field> </td>
+          <td>  <v-text-field v-model="repetitions[routine_exercise_info.id]" ></v-text-field> </td>
+          <td>  <v-text-field v-model="series[routine_exercise_info.id]" ></v-text-field> </td>
         </tr>
         </tbody>
         <v-btn @click="updateExerciseRoutine" class="bg-blue"></v-btn>
@@ -52,6 +52,8 @@ export default {
       exerciseVolume: [],
       selectedExercise: {},
       updatedSeries: {},
+      series: {},
+      repetitions: {},
     };
   },
   mounted() {
@@ -72,8 +74,9 @@ export default {
         this.routines.forEach((routine) => {
           routine.routine_exercise.forEach((routineExercise) => {
             this.selectedExercise[routineExercise.id] = routineExercise.exercise.id;
-            this.exerciseVolume[routineExercise.id] = routineExercise.volume.id;
-          console.log(routine)
+            this.exerciseVolume[routineExercise.id] = routineExercise.training_volume.id;
+            this.series[routineExercise.id] = routineExercise.training_volume.series;
+            this.repetitions[routineExercise.id] = routineExercise.training_volume.repetitions
           });
       })} catch (error) {
         console.error('Error al obtener la rutina:', error);
@@ -108,12 +111,14 @@ export default {
         this.routines.forEach((routine) => {
           routine.routine_exercise.forEach((routine_exercise) => {
             const selectedExercise = this.selectedExercise[routine_exercise.id];
-            const updatedExerciseRepetitions = this.exerciseVolume[routine_exercise.id].repetitions;
-            const updatedExerciseSeries = this.exerciseVolume[routine_exercise.id].series;
+            const updatedExerciseVolumeId = this.exerciseVolume[routine_exercise.id];
+            const updatedExerciseRepetitions = this.repetitions[routine_exercise.id];
+            const updatedExerciseSeries = this.series[routine_exercise.id];
             if (selectedExercise !== null) {
               updatedExercises.push({
                 routineExerciseId:  routine_exercise.id,
                 updatedExerciseId: selectedExercise,
+                updatedExerciseVolumeId: parseInt(updatedExerciseVolumeId),
                 updatedExerciseRepetitions: parseInt(updatedExerciseRepetitions),
                 updatedExerciseSeries: parseInt(updatedExerciseSeries)
               });
