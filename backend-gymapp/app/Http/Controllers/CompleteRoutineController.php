@@ -24,11 +24,11 @@ class CompleteRoutineController extends Controller
     {
 
         try {
-            $user_routine = Routine::where('user_id', $user_id)->get();
+            $user_routine = Routine::where('user_id', $user_id)->first();
             if (!$user_routine){
                 return "You have no routine available";
             };
-            $user_routine->load(['routineExercise.exercise', 'routineExercise.volume']);
+            $user_routine->load(['RoutineExercise.Exercise', 'RoutineExercise.TrainingVolume']);
             return $user_routine;
         }catch (\Exception $e){
             return $e;

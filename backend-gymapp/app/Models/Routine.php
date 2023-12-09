@@ -13,15 +13,15 @@ class Routine extends Model
     protected $casts = ["train_day" => RoutineDaysEnums::class];
     protected $fillable = ['user_id'];
 
-    public function user(){
+    public function User(){
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-    public function exercise(){
-        return $this->hasMany(Exercise::class,'exercise_id');
+    public function Exercise(){
+        return $this->belongsToMany(Exercise::class, 'routine_exercises', 'routine_id', 'exercise_id');
     }
 
-    public function routineExercise(){
-        return $this->hasMany(RoutineExercise::class);
+    public function RoutineExercise(){
+        return $this->hasMany(RoutineExercise::class, 'routine_id');
     }
 
 }

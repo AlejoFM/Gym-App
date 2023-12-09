@@ -48,7 +48,9 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
 
     Route::get('/dashboard/exercise/volume/{exercise_id}', [\App\Http\Controllers\TrainingVolumeController::class, 'index']);
     Route::post('/dashboard/exercise/volume', [\App\Http\Controllers\TrainingVolumeController::class, 'store']);
+    Route::put('/dashboard/exercise/volume', [\App\Http\Controllers\TrainingVolumeController::class, 'update']);
     });
+
     Route::get('/routinetest/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
 
     Route::get('/myroutine', [\App\Http\Controllers\RoutineController::class, 'myroutine']);

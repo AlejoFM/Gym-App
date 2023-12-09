@@ -14,11 +14,11 @@ class Exercise extends Model
     public function routine(){
         return $this->belongsTo(Routine::class, 'routine_id', 'id');
     }
-    public function routineExercise(){
-        return $this->hasMany(RoutineExercise::class, 'exercise_id', 'id');
+    public function RoutineExercise(){
+        return $this->belongsTo(RoutineExercise::class, 'exercise_id', 'id');
     }
-    public function trainingVolume(){
-        return $this->belongsTo(TrainingVolume::class, 'exercise_id');
+    public function TrainingVolume(){
+        return $this->hasMany(TrainingVolume::class, 'exercise_id');
     }
 
 }

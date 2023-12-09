@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-text-field :v-model="repetitions" :label="exercise_repetitions" hide-details="auto" :exercise_id="exercise_id"></v-text-field>
+    <v-text-field :v-model="series" :label="exercise_series" hide-details="auto" :exercise_id="exercise_id"></v-text-field>
   </div>
 </template>
 <script>
@@ -13,31 +13,34 @@ export default {
       type: Number,
       required: true,
     },
-    exercise_repetitions: {
+    exercise_series: {
       type: Number,
       required: true,
     },
   },
   data() {
     return {
-      repetitions: {},
+      series: {},
     };
   },
   mounted() {
-    this.fetchVolumeRepetitions(this.exercise_id);
-    this.repetitions = this.exercise_repetitions;
+    this.fetchVolumeSeries(this.exercise_id);
+    this.series = this.exercise_series;
   },
   methods: {
     router() {
       return router
     },
-    async fetchVolumeRepetitions(exercise_id) {
+    async updateRoutine(){
+      this.$emit("updateSeries", this.series)
+    },
+    async fetchVolumeSeries(exercise_id) {
       console.log(exercise_id)
       try {
         const response = await this.$axios.get(`/dashboard/exercise/volume/${exercise_id}`);
         this.routines = response.data;
-        this.repetitions = response.data.volume.repetitions;
-        console.log(this.repetitions)
+        this.series = response.data.volume.series;
+        console.log(this.series)
       } catch (error) {
         console.error('Error al obtener la rutina:', error);
       }

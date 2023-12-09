@@ -58,10 +58,35 @@ class TrainingVolumeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $training_volumes = $request->input('toUpdateExercise');
+
+        foreach ($training_volumes as $training_volume) {
+            $existingExercise = RoutineExercise::where(['id' => $training_volume['routineExerciseId']])->first();
+            if ($existingExercise) {
+                $updateData = [];
+
+                // Verifica si la solicitud tiene repeticiones y actualiza solo si se proporciona
+                if ($request->input('exercise_repetitions')) {
+                    $updateData['repetitions'] = $request->input('exercise_repetitions');
+                } else {
+                    $updateData['repetitions'] = $existingExercise->repetitions;
+                }
+
+                // Verifica si la solicitud tiene series y actualiza solo si se proporciona
+                if ($request->input('exercise_series')) {
+                    $updateData['series'] = $request->input('exercise_series');
+                } else {
+                    $updateData['series'] = $existingExercise->series;
+                }
+            $existingExercise->update($updateData);
+            }
+        }
+
+        return response()->json(['data' => $training_volumes]);
     }
+
 
     /**
      * Remove the specified resource from storage.

@@ -20,7 +20,7 @@ class ExerciseController extends Controller
     public function index()
     {
         try {
-            $exercises = Exercise::with('trainingVolume')->get();
+            $exercises = Exercise::all();
 
             return response()->json(['exercises' => $exercises], 200);
         } catch (\Exception $e) {
@@ -62,6 +62,7 @@ class ExerciseController extends Controller
         $exercises = $request->input('updatedExercises');
         foreach ($exercises as $exercise){
             RoutineExercise::where(['id' => $exercise['routineExerciseId']])->first()->update(['exercise_id' => $exercise['updatedExerciseId']]);
+            TrainingVolume::where(['exercise_id' => $exercise['updatedExerciseId']])->first()->update(['repetitions' => $exercise['updatedExerciseRepetitions'], 'series' => $exercise['updatedExerciseSeries']]);
         }
         return response()->json(['data' => $exercises]);
 

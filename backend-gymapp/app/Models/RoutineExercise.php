@@ -15,19 +15,19 @@ class RoutineExercise extends Model
         'volume_id',
         'user_id',
     ];
-    public function routine()
+    public function Routine()
     {
         return $this->belongsTo(Routine::class, 'routine_id');
     }
 
-    public function exercise()
+    public function Exercise()
     {
-        return $this->belongsTo(Exercise::class, 'exercise_id', 'id');
+        return $this->belongsTo(Exercise::class, 'exercise_id');
     }
 
-    public function volume()
+    public function TrainingVolume()
     {
-        return $this->belongsTo(TrainingVolume::class, 'volume_id');
+        return $this->hasOne(TrainingVolume::class, 'routine_exercise_id');
     }
 
     public function user()

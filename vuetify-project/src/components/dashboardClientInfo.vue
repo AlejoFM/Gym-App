@@ -25,8 +25,8 @@
           <td>
             <v-select v-model="selectedExercise[routine_exercise_info.id]" :items="exerciseNames" item-title="name" item-value="id"></v-select>
           </td>
-          <td><v-text-field label="Main input" :rules="rules" hide-details="auto"></v-text-field></td>
-          <td><v-text-field label="Main input" :rules="rules" hide-details="auto"></v-text-field></td>
+          <td>  <v-text-field v-model="exerciseVolume[routine_exercise_info.id].repetitions" ></v-text-field> </td>
+          <td>  <v-text-field v-model="exerciseVolume[routine_exercise_info.id].series" ></v-text-field> </td>
         </tr>
         </tbody>
         <v-btn @click="updateExerciseRoutine" class="bg-blue"></v-btn>
@@ -40,19 +40,23 @@
 <script>
 import Navbar from "@/components/navbar.vue";
 import router from "@/router";
+import RepetitionsTextField from "@/components/repetitions-text-field.vue";
+import SeriesTextField from "@/components/series-text-field.vue";
 
 export default {
-  components: {Navbar},
+  components: {SeriesTextField, RepetitionsTextField, Navbar},
   data() {
     return {
       routines: [],
       exerciseNames: [],
+      exerciseVolume: [],
       selectedExercise: {},
+      updatedSeries: {},
     };
   },
   mounted() {
     this.fetchRoutine();
-    this.fetchExerciseNames();
+    this.fetchExercise();
     this.updateExerciseRoutine();
   },
   methods: {
@@ -64,15 +68,18 @@ export default {
       try {
         const response = await this.$axios.get(`/dashboard/user_routine/${userId}`);
         this.routines = response.data;
+        console.log(this.routines)
         this.routines.forEach((routine) => {
           routine.routine_exercise.forEach((routineExercise) => {
             this.selectedExercise[routineExercise.id] = routineExercise.exercise.id;
+            this.exerciseVolume[routineExercise.id] = routineExercise.volume.id;
+          console.log(routine)
           });
       })} catch (error) {
         console.error('Error al obtener la rutina:', error);
       }
     },
-    async fetchExerciseNames(){
+    async fetchExercise(){
       try {
         const response = await this.$axios.get(`/dashboard/exercise`);
         this.exerciseNames = this.extractExerciseNames(response.data.exercises);
@@ -101,11 +108,14 @@ export default {
         this.routines.forEach((routine) => {
           routine.routine_exercise.forEach((routine_exercise) => {
             const selectedExercise = this.selectedExercise[routine_exercise.id];
+            const updatedExerciseRepetitions = this.exerciseVolume[routine_exercise.id].repetitions;
+            const updatedExerciseSeries = this.exerciseVolume[routine_exercise.id].series;
             if (selectedExercise !== null) {
-              console.log(selectedExercise)
               updatedExercises.push({
-                routineExerciseId: routine_exercise.id,
-                updatedExerciseId: selectedExercise
+                routineExerciseId:  routine_exercise.id,
+                updatedExerciseId: selectedExercise,
+                updatedExerciseRepetitions: parseInt(updatedExerciseRepetitions),
+                updatedExerciseSeries: parseInt(updatedExerciseSeries)
               });
             }
           });

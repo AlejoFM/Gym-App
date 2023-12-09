@@ -19,7 +19,7 @@ class TrainingVolumeFactory extends Factory
         return [
             "series" => rand(1,4),
             "repetitions" => rand(6,11),
-            "exercise_id" => rand(1,4),
+            "routine_exercise_id" => rand(1,2),
         ];
     }
 }

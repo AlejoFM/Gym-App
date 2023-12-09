@@ -19,7 +19,7 @@ class routineExerciseFactory extends Factory
         return [
             "routine_id" => rand(1,4),
             "exercise_id" => rand(1,8),
-            "volume_id" => rand(1,4),
+            "volume_id" => rand(1,2),
             "user_id" => rand(1,4),
         ];
 
