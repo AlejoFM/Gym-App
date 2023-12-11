@@ -28,6 +28,47 @@ class ExerciseController extends Controller
         }
     }
 
+    public function showMuscularGroupExercises($muscular_group_name){
+        try {
+            $muscular_group = Exercise::where('muscular_group', $muscular_group_name)->get();
+            return response()->json(['data' => $muscular_group], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e], 500);
+        }
+    }
+    public function createNewExercise(Request $request){
+        try {
+
+            $newExercise = new Exercise();
+            $newExercise->muscular_group = $request->exerciseData['muscular_groups_name'];
+            $newExercise->name = $request->exerciseData['name'];
+            $newExercise->save();
+
+            return response()->json(['data' => $newExercise], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+    public function updateExerciseName(Request $request){
+            $exercisesNames = $request->input('ExerciseNames');
+        try {
+            foreach ($exercisesNames as $name) {
+                Exercise::where('id', $name['id'])->first()->update(['name' => $name['name']]);
+            }
+            return \response()->json(['data' => $exercisesNames]);
+        }catch (\Exception $e){
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
+    }
+    public function showMuscularGroup(){
+
+        try {
+        $muscular_group = Exercise::all('muscular_group');
+        return response()->json(['muscular_group' => $muscular_group], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e], 500);
+        }
+    }
     /**
      * Store a newly created resource in storage.
      */

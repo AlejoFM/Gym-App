@@ -28,6 +28,7 @@ class LoggedInValidation
             $tokenUpdateDate = $token->user()['token_update_date'];
             $tokenUpdate = new Carbon($tokenUpdateDate);
 
+            $request->headers->set('X-Requested-With', 'XMLHttpRequest');
             if ($payload->get('iat') >= $tokenUpdate->getTimestamp()) {
                 return $next($request);
             }

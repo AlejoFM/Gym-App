@@ -28,7 +28,7 @@ class RoutineController extends Controller
         $user = auth()->user();
 
         // Cargar las relaciones routine y routineExercise directamente
-        $user->load(['routine.routineExercise.exercise', 'routine.routineExercise.volume']);
+        $user->load(['routine.RoutineExercise.exercise', 'routine.RoutineExercise.TrainingVolume']);
 
         $routines = $user->routine;
 

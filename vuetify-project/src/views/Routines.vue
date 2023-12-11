@@ -3,32 +3,33 @@
     <v-layout>
       <navbar></navbar>
       <v-main>
-    <h2>Rutina del Usuario</h2>
-      <template v-for="routine in routines" :key="routine.id">
-    <table>
-      <thead>
-      <tr>
-        <th>Día</th>
-        <th>Ejercicio</th>
-        <th>Repetitions</th>
-        <th>Series</th>
-      </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(routine_exercise_info, index) in routine.routine_exercise" :key="routine_exercise_info.id">
-          <template v-if="index === 0 || routine_exercise_info.routine_id !== routine.routine_exercise[index - 1].routine_id">
-            <td>{{ routine.train_day }}</td>
-          </template>
-          <template v-else>
-            <td></td>
-          </template>
-          <td>{{ routine_exercise_info.exercise.name }}</td>
-          <td>{{ routine_exercise_info.volume.repetitions }}</td>
-          <td>{{ routine_exercise_info.volume.series }}</td>
-        </tr>
-      </tbody>
-    </table>
-      </template>
+        <h2>Rutina del Usuario</h2>
+        <template v-for="routine in routines" :key="routine.id">
+          <table v-if="routine.routine_exercise.length > 0">
+            <thead>
+            <tr>
+              <th>Día</th>
+              <th>Ejercicio</th>
+              <th>Repetitions</th>
+              <th>Series</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="(routine_exercise_info, index) in routine.routine_exercise" :key="routine_exercise_info.id">
+              <template
+                v-if="index === 0 || routine_exercise_info.routine_id !== routine.routine_exercise[index - 1].routine_id">
+                <td>{{ routine.train_day }}</td>
+              </template>
+              <template v-else>
+                <td></td>
+              </template>
+              <td>{{ routine_exercise_info.exercise.name }}</td>
+              <td>{{ routine_exercise_info.training_volume.repetitions }}</td>
+              <td>{{ routine_exercise_info.training_volume.series }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </template>
       </v-main>
     </v-layout>
   </v-app>

@@ -18,8 +18,8 @@ use App\Http\Controllers\TokenController;
 */
 
 //TODO: Hacer los endpoints y controladores necesarios.
-// TODO: Mejorar la tabla de rutinas para editar para los usuarios, utilizar una tabla en vez de un data visualizer.
-
+//TODO: Hacer la lógica para que en la ruta de ejercicios, apareza primero el grupo muscular y luego rediriga a una vista
+// con todos los ejercicios correspondientes a ese grupo.
 Route::group([
     'middleware' => 'api',
 ], function ($router) {
@@ -36,16 +36,17 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
     Route::get('/dashboard/users', [\App\Http\Controllers\UserController::class, 'index']);
     Route::get('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'show']);
 
-    //TODO: FINALIZAR LOS ENDPOINTS DE EDICION
     Route::get('/dashboard/user_routine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
-    Route::put('/dashboard/user_routine/{routine_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'updateRoutine']);
-    Route::post('/dashboard/routine_daily', [\App\Http\Controllers\RoutineController::class, 'store']);
+    Route::put('/dashboard/exercise', [\App\Http\Controllers\CompleteRoutineController::class, 'updateRoutineUser']);
 
-    Route::get('/dashboard/completeroutine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class,'index']);
+    Route::get('/dashboard/muscular_group', [\App\Http\Controllers\ExerciseController::class, 'showMuscularGroup']);
+    Route::get('/dashboard/muscular_group/{muscular_group_name}', [\App\Http\Controllers\ExerciseController::class, 'showMuscularGroupExercises']);
+    Route::post('/dashboard/muscular_group/', [\App\Http\Controllers\ExerciseController::class, 'createNewExercise']);
+    Route::put('/dashboard/muscular_group/', [\App\Http\Controllers\ExerciseController::class, 'updateExerciseName']);
+
     Route::post('/dashboard/generateroutine/', [\App\Http\Controllers\CompleteRoutineController::class,'generateRoutine']);
     Route::get('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'index']);
     Route::post('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'store']);
-    Route::put('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'update']);
 
     Route::get('/dashboard/exercise/volume/{exercise_id}', [\App\Http\Controllers\TrainingVolumeController::class, 'index']);
     Route::post('/dashboard/exercise/volume', [\App\Http\Controllers\TrainingVolumeController::class, 'store']);

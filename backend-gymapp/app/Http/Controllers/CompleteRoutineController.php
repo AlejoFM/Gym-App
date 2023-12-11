@@ -132,20 +132,15 @@ class CompleteRoutineController extends Controller
         ]);
     }
 
-    public function updateRoutine(Request $request, $routine_id){
 
-        $user_routine = Routine::findOrFail($routine_id);
+    public function updateRoutineUser(Request $request)
+    {
+        $exercises = $request->input('updatedExercises');
+        foreach ($exercises as $exercise){
+            RoutineExercise::where(['id' => $exercise['routineExerciseId']])->first()->update(['exercise_id' => $exercise['updatedExerciseId']]);
+            TrainingVolume::where(['id' => $exercise['updatedExerciseVolumeId']])->first()->update(['repetitions' => $exercise['updatedExerciseRepetitions'], 'series' => $exercise['updatedExerciseSeries']]);
+        }
+        return response()->json(['data' => $exercises]);
 
-        $user_routine->load(['routineExercise.volume', 'routineExercise.exercise']);
-        $routineId = $user_routine->routineExercise->pluck('id')->toArray();
-
-        $routineExercises = RoutineExercise::whereIn('id', $routineId)->pluck('exercise_id')->toArray();
-        $routine_exercise_name = Exercise::whereIn('id', $routineExercises)->get();
-        $routineExercises  = $request->exercisename;
-
-        $routineExercises_volume = RoutineExercise::whereIn('id', $routineId)->pluck('volume_id')->toArray();
-        $routine_exercise_volume = TrainingVolume::whereIn('id', $routineExercises_volume)->get();
-
-        return $routine_exercise_volume;
     }
 }
