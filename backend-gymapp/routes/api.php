@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
     Route::post('/dashboard/users', [\App\Http\Controllers\UserController::class, 'store']);
     Route::get('/dashboard/users', [\App\Http\Controllers\UserController::class, 'index']);
     Route::get('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'show']);
+    Route::delete('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'deleteRoutine']);
 
     Route::get('/dashboard/user_routine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
     Route::put('/dashboard/exercise', [\App\Http\Controllers\CompleteRoutineController::class, 'updateRoutineUser']);

@@ -20,10 +20,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('routine_id')->references('id')->on('routines');
-            $table->foreign('exercise_id')->references('id')->on('exercises');
+            $table->foreign('routine_id')->references('id')->on('routines')->cascadeOnDelete();
+            $table->foreign('exercise_id')->references('id')->on('exercises')->cascadeOnDelete();
             $table->foreign('volume_id')->references('id')->on('training_volumes');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 

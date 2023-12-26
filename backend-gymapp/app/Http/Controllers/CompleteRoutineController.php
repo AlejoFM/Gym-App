@@ -13,7 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Tymon\JWTAuth\Facades\JWTAuth;
-
+// TODO: Hacer un sistema de mensaje en tiempo real.
 class CompleteRoutineController extends Controller
 {
     /**

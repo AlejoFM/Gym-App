@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('train_day');
             $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
             $table->unique(['train_day', 'user_id']);
         });

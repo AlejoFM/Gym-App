@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp("payment_date")->default(date(now()));
             $table->timestamp("expiry_date")->default(date(now()));
             $table->unsignedBigInteger("user_id");
-            $table->foreign("user_id")->references("id")->on("users");
+            $table->foreign("user_id")->references("id")->on("users")->cascadeOnDelete();
         });
     }
 

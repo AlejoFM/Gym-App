@@ -23,7 +23,6 @@ class LoggedInValidation
         try {
             $token= JWTAuth::parseToken();
             $token->authenticate();
-
             $payload = $token->getPayload();
             $tokenUpdateDate = $token->user()['token_update_date'];
             $tokenUpdate = new Carbon($tokenUpdateDate);
@@ -31,13 +30,12 @@ class LoggedInValidation
             $request->headers->set('X-Requested-With', 'XMLHttpRequest');
             if ($payload->get('iat') >= $tokenUpdate->getTimestamp()) {
                 return $next($request);
-            }
 
+            }
             return response()->json(['error' => 'Fecha de token inválida']);
         } catch (JWTException $e) {
             \Log::error('Error al manejar el token JWT: ' . $e->getMessage());
         }
-
-        return response()->json(['message' => 'No tienes la sesión iniciada'], 401);
+        return response()->json(['message' => 'No tienes la sesión iniciada'],401);
     }
 }

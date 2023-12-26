@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('series');
             $table->integer('repetitions');
             $table->unsignedBigInteger('routine_exercise_id');
-            $table->foreign('routine_exercise_id')->references('id')->on('exercises');
+            $table->foreign('routine_exercise_id')->references('id')->on('exercises')->cascadeOnDelete();
             $table->timestamps();
         });
     }
