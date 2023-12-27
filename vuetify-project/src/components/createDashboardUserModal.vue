@@ -10,7 +10,7 @@
           color="primary"
           v-bind="props"
         >
-          Open Dialog
+          Crear Usuario
         </v-btn>
       </template>
       <v-card>
@@ -20,20 +20,20 @@
         <v-card-text>
           <v-container>
             <v-row class="d-flex justify-content-around">
-              <v-col><v-text-field label="Name Client*" required ></v-text-field></v-col>
+              <v-col><v-text-field label="Name Client*" v-model="user.name" placeholder="User Name" required ></v-text-field></v-col>
               <v-col>
-                <v-text-field label="Last name Client" hint="example of helper text only on focus"></v-text-field>
+                <v-text-field label="Last name Client" v-model="user.surname" hint="example of helper text only on focus"></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  label="Email*"
+                  label="Email*" v-model="user.email"
                   required
                 ></v-text-field>
               </v-col>
               <v-col>
                 <v-text-field
                   label="Password*"
-                  type="password"
+                  type="password" v-model="user.password"
                   required
                 ></v-text-field>
               </v-col>
@@ -53,9 +53,9 @@
           <v-btn
             color="blue-darken-1"
             variant="text"
-            @click="dialog = false"
+            @click="dialog = false; createNewUser();"
           >
-            Save
+            Upload
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -64,18 +64,29 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data: () => ({
     dialog: false,
     user: {
-      name: "",
-      surname: "",
       email: "",
-      password: ""},
+      name: "",
+      password: "",
+      surname: "",
+    },
+    errors: {}
   }),
   methods: {
-    createNewUser: {
-
+    async createNewUser() {
+      try {
+        const response = await axios.post("dashboard/users", this.user)
+        console.log(response)
+      } catch (error) {
+        if (error.response && error.response.data) {
+          console.log(error.response.data.errors);
+        }
+      }
     }
   }
 }

@@ -32,6 +32,7 @@
         <v-btn @click="updateExerciseRoutine" class="bg-blue"></v-btn>
       </v-table>
     </template>
+      <create-user-routine-modal></create-user-routine-modal>
       </v-main>
       </v-layout>
   </v-app>
@@ -42,9 +43,10 @@ import Navbar from "@/components/navbar.vue";
 import router from "@/router";
 import RepetitionsTextField from "@/components/repetitions-text-field.vue";
 import SeriesTextField from "@/components/series-text-field.vue";
+import CreateUserRoutineModal from "@/components/createUserRoutineModal.vue";
 
 export default {
-  components: {SeriesTextField, RepetitionsTextField, Navbar},
+  components: {CreateUserRoutineModal, SeriesTextField, RepetitionsTextField, Navbar},
   data() {
     return {
       routines: [],

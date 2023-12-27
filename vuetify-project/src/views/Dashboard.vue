@@ -16,7 +16,7 @@
           </div>
         </template>
       </v-row>
-        <dashboard-create-user-modal></dashboard-create-user-modal>
+        <create-dashboard-user-modal></create-dashboard-user-modal>
         </v-sheet>
       </v-container>
     </v-main>
@@ -29,11 +29,11 @@ import dashboardClient from "@/components/dashboardClient.vue";
 import axios from "axios";
 import Navbar from "@/components/navbar.vue";
 import {VaModal} from "vuestic-ui";
-import DashboardCreateUserModal from "@/components/DashboardCreateUserModal.vue";
+import createDashboardUserModal from "@/components/createDashboardUserModal.vue";
 
 export default {
   components: {
-    DashboardCreateUserModal,
+    createDashboardUserModal,
     VaModal,
     Navbar,
     dashboardClient,
@@ -65,14 +65,6 @@ export default {
         console.log(e);
       }
     },
-    async createUser(){
-      try {
-      const createUser = axios.post(`/dashboard/users`. this.data);
-
-      }catch (e){
-        console.log(e)
-      }
-    }
   }
 };
 </script>

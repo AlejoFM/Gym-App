@@ -1,5 +1,5 @@
 // Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory, useRoute, useRouter} from 'vue-router'
 import login from "@/views/Login.vue";
 import routines from "@/views/Routines.vue";
 import dashboard from "@/views/Dashboard.vue"
@@ -27,23 +27,25 @@ router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     if (!token || !user) {
-      next('/login');
+      next({ name: 'login' });
       return;
     }
-    const userRole = JSON.parse(user).rol;
-
-    if (userRole !== "admin" && to.meta.isAdmin === true) {
-      if (to.path.endsWith('/unauthorized')) {
-        next();
-      } else {
-        next('/unauthorized')
-      }
-    } else {
+    else {
       next();
     }
-  } else {
+    const userRole = JSON.parse(user).rol;
+    if (userRole !== "admin" && to.meta.isAdmin === true) {
+      next({ name: 'login' });
+      return;
+    }else {
+      next();
+    }
+  }
+  else{
     next();
   }
+  let current = router.currentRoute;
+    console.log(current);
 });
 
 

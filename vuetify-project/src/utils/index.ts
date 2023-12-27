@@ -14,16 +14,24 @@ axios.interceptors.request.use(
         return Promise.reject(error);
     }
 );
-
 axios.interceptors.response.use(
     (response) => {
         return response;
     },
     (error) => {
-        if (error.response.status === 401) {
-            router.push('unauthorized');
-        }
+        if (error.response.data.message === "No tienes permiso para acceder a esta ruta") {
+          router.push('unauthorized');
+        }else if(error.response.data.message == "Fecha de token inválida")
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
+
+              router.push('unauthorized').then(() => {
+                setTimeout(() => {
+                  router.push('login');
+                }, 3000)
+            });
         return Promise.reject(error);
     }
 );
+
 export default axios

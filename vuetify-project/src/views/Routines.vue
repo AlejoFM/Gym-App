@@ -37,9 +37,10 @@
 
 <script>
 import Navbar from "@/components/navbar.vue";
+import CreateUserRoutineModal from "@/components/createUserRoutineModal.vue";
 
 export default {
-  components: {Navbar},
+  components: {CreateUserRoutineModal, Navbar},
   data() {
     return {
       routines: [],

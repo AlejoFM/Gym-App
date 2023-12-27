@@ -48,7 +48,7 @@ class UserController extends Controller
         }else{
             abort(403);
         }
-        return ([
+        return response()->json([
             'data' => [
                 'user_data' => $user,
             ]
