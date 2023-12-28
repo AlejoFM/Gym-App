@@ -44,8 +44,6 @@ router.beforeEach((to, from, next) => {
   else{
     next();
   }
-  let current = router.currentRoute;
-    console.log(current);
 });
 
 

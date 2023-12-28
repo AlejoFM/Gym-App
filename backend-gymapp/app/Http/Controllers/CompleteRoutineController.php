@@ -19,7 +19,6 @@ class CompleteRoutineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // TODO: Que solo el usuario autenticado con el id, pueda ver su contenido.
     public function index(string $user_id)
     {
 
@@ -44,53 +43,61 @@ class CompleteRoutineController extends Controller
      */
     public function generateRoutine(Request $request){
 
-        $volume = new TrainingVolume();
-        $request->validate([
-            'user_id' => 'required|exists:users,id',
-            'training_day' => ['required', Rule::enum(RoutineDaysEnums::class)],
-            'exercise_id' => 'required',
-            'exercise_repetitions' => 'required',
-            'exercise_series' => 'required',
-        ],[
-            'user_id.exists' => "This user dont exists"
-        ]);
-        $data = $request->only('user_id','training_day','exercise_id', 'exercise_repetitions', 'exercise_series');
-        $user = User::find($data['user_id']);
-        $routine = Routine::firstOrNew([ 'user_id'=>$user->id, 'train_day' => $data['training_day']]);
-        $exercise = Exercise::find($data['exercise_id']);
+        try {
 
-        $token = JWTAuth::getToken();
-        $admin = JWTAuth::parseToken()->toUser($token);
-
-        if ($admin->can('create', Exercise::class)){
-
-            $volume->series = $data['exercise_series'];
-            $volume->repetitions = $data['exercise_repetitions'];
-
-            $volume->exercise_id = $exercise->id;
-            $volume->save();
-
-            $routine->train_day = $request->training_day;
-            $routine->user_id = $user->id;
-            $routine->save();
-            $routineExercise = new RoutineExercise([
-                'routine_id' => $routine->id,
-                'exercise_id' => $exercise->id,
-                'volume_id' => $volume->id,
-                'user_id' => $user->id,
+            $volume = new TrainingVolume();
+            $request->validate([
+                'user_id' => 'required|exists:users,id',
+                'training_day' => ['required', Rule::enum(RoutineDaysEnums::class)],
+                'exercise_id' => 'required',
+                'exercise_repetitions' => 'required',
+                'exercise_series' => 'required',
+            ], [
+                'user_id.exists' => "This user dont exists"
             ]);
-            $routineExercise->save();
-        }else{
-            abort(401);
+            $data = $request->only('user_id', 'training_day', 'exercise_id', 'exercise_repetitions', 'exercise_series');
+            $user = User::find($data['user_id']);
+            $routine = Routine::firstOrNew(['user_id' => $user->id, 'train_day' => $data['training_day']]);
+            $exercise = Exercise::find($data['exercise_id']);
+
+            $token = JWTAuth::getToken();
+            $admin = JWTAuth::parseToken()->toUser($token);
+
+            if ($admin->can('create', Exercise::class)) {
+
+                $volume->series = $data['exercise_series'];
+                $volume->repetitions = $data['exercise_repetitions'];
+
+                $volume->exercise_id = $exercise->id;
+                $volume->save();
+
+                $routine->train_day = $request->training_day;
+                $routine->user_id = $user->id;
+                $routine->save();
+                $routineExercise = new RoutineExercise([
+                    'routine_id' => $routine->id,
+                    'exercise_id' => $exercise->id,
+                    'volume_id' => $volume->id,
+                    'user_id' => $user->id,
+                ]);
+                $routineExercise->save();
+            } else {
+                abort(401);
+            }
+            return ([
+                'data' => [
+                    'routine' => $routine,
+                    'routine_full_information' => $routineExercise,
+                    'exercise_data' => $exercise,
+                    'volume_data' => $volume,
+                ]
+            ]);
+        }catch (\Exception $e) {
+            \Log::error($e->getMessage());
+            \Log::error($e->getTraceAsString());
+
+            return response(['error' => 'Internal Server Error'], 500);
         }
-        return ([
-            'data' => [
-                'routine' => $routine,
-                'routine_full_information' => $routineExercise,
-                'exercise_data' => $exercise,
-                'volume_data' => $volume,
-            ]
-        ]);
     }
     public function store(Request $request)
     {
