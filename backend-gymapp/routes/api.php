@@ -32,6 +32,8 @@ Route::group([
 Route::group(['middleware' => 'auth.jwt'],function ($router) {
 
     Route::group(['middleware' => 'auth.admin'], function ($router){
+
+
     Route::post('/dashboard/users', [\App\Http\Controllers\UserController::class, 'store']);
     Route::get('/dashboard/users', [\App\Http\Controllers\UserController::class, 'index']);
     Route::get('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'show']);

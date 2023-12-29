@@ -42,7 +42,6 @@ class CompleteRoutineController extends Controller
      * Store a newly created resource in storage.
      */
     public function generateRoutine(Request $request){
-
         try {
 
             $volume = new TrainingVolume();
@@ -60,6 +59,7 @@ class CompleteRoutineController extends Controller
             $routine = Routine::firstOrNew(['user_id' => $user->id, 'train_day' => $data['training_day']]);
             $exercise = Exercise::find($data['exercise_id']);
 
+
             $token = JWTAuth::getToken();
             $admin = JWTAuth::parseToken()->toUser($token);
 
@@ -68,9 +68,8 @@ class CompleteRoutineController extends Controller
                 $volume->series = $data['exercise_series'];
                 $volume->repetitions = $data['exercise_repetitions'];
 
-                $volume->exercise_id = $exercise->id;
+                $volume->routine_exercise_id = $exercise->id;
                 $volume->save();
-
                 $routine->train_day = $request->training_day;
                 $routine->user_id = $user->id;
                 $routine->save();
@@ -96,7 +95,7 @@ class CompleteRoutineController extends Controller
             \Log::error($e->getMessage());
             \Log::error($e->getTraceAsString());
 
-            return response(['error' => 'Internal Server Error'], 500);
+            return response(['error' => $e], 500);
         }
     }
     public function store(Request $request)

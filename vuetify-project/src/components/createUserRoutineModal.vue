@@ -114,8 +114,9 @@ export default {
     async createNewRoutine() {
       try {
         const userId = this.$route.params.user_id
-        this.routine.user_id = userId;
+        this.routine.user_id = parseInt(userId);
 
+        console.log(this.routine)
         const response = await axios.post("/dashboard/generateroutine/", this.routine)
         console.log(response)
       } catch (error) {
