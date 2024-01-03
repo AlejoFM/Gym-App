@@ -17,16 +17,18 @@
         <tbody>
         <tr v-for="(routine_exercise_info, index) in routine.routine_exercise" :key="routine_exercise_info.id">
           <template v-if="index === 0 || routine_exercise_info.routine_id !== routine.routine_exercise[index - 1].routine_id">
-            <td>{{ routine.train_day }}</td>
+            <td>{{ routine.train_day }} </td>
           </template>
           <template v-else>
             <td></td>
           </template>
           <td>
+
             <v-select v-model="selectedExercise[routine_exercise_info.id]" :items="exerciseNames" item-title="name" item-value="id"></v-select>
           </td>
           <td>  <v-text-field v-model="repetitions[routine_exercise_info.id]" ></v-text-field> </td>
-          <td>  <v-text-field v-model="series[routine_exercise_info.id]" ></v-text-field> </td>
+          <td>  <v-text-field v-model="series[routine_exercise_info.id]" ></v-text-field></td>
+          <td> <v-btn @click="deleteExerciseRoutine(routine_exercise_info.id)" class="bg-red">DELETE</v-btn></td>
         </tr>
         </tbody>
         <v-btn @click="updateExerciseRoutine" class="bg-blue"></v-btn>
@@ -62,6 +64,7 @@ export default {
     this.fetchRoutine();
     this.fetchExercise();
     this.updateExerciseRoutine();
+
   },
   methods: {
     router() {
@@ -133,6 +136,27 @@ export default {
         // Recupera los IDs actualizados del servidor
         const updatedIds = response.data.updatedExercises;
         console.log('IDs actualizados:', updatedIds);
+
+      } catch (error) {
+        console.error('Error al enviar los cambios:', error);
+      }
+    },
+    async deleteExerciseRoutine(id){
+      console.log(id);
+      try {
+        const userId = this.$route.params.user_id;
+        let routineExerciseId;
+        this.routines.forEach((routine) => {
+          routine.routine_exercise.forEach((routine_exercise) => {
+            const selectedExercise = this.selectedExercise[routine_exercise.id];
+            if (selectedExercise !== null) {
+              routineExerciseId = routine_exercise.id
+            }
+          });
+        });
+        const response = await this.$axios.delete(`/dashboard/exercise`, {data: { exerciseId: id }})
+
+        await this.fetchRoutine();
 
       } catch (error) {
         console.error('Error al enviar los cambios:', error);

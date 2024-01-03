@@ -86,7 +86,9 @@ class ExerciseController extends Controller
 
         return response()->json(['message' => 'Exercise created successfully', 'exercise' => $exercise], 201);
     }
-
+    public function deleteExercise(Request $request){
+        return RoutineExercise::where('id', $request->exerciseId)->delete();
+    }
     /**
      * Display the specified resource.
      */

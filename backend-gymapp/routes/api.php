@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
     Route::post('/dashboard/users', [\App\Http\Controllers\UserController::class, 'store']);
     Route::get('/dashboard/users', [\App\Http\Controllers\UserController::class, 'index']);
     Route::get('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'show']);
-    Route::delete('/dashboard/users/{id}', [\App\Http\Controllers\UserController::class, 'deleteRoutine']);
+    Route::delete('/dashboard/users', [\App\Http\Controllers\UserController::class, 'deleteRoutine']);
 
     Route::get('/dashboard/user_routine/{user_id}', [\App\Http\Controllers\CompleteRoutineController::class, 'index']);
     Route::put('/dashboard/exercise', [\App\Http\Controllers\CompleteRoutineController::class, 'updateRoutineUser']);
@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth.jwt'],function ($router) {
     Route::post('/dashboard/generateroutine/', [\App\Http\Controllers\CompleteRoutineController::class,'generateRoutine']);
     Route::get('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'index']);
     Route::post('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'store']);
+    Route::delete('/dashboard/exercise', [\App\Http\Controllers\ExerciseController::class, 'deleteExercise']);
 
     Route::get('/dashboard/exercise/volume/{exercise_id}', [\App\Http\Controllers\TrainingVolumeController::class, 'index']);
     Route::post('/dashboard/exercise/volume', [\App\Http\Controllers\TrainingVolumeController::class, 'store']);

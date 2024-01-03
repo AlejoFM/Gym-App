@@ -10,6 +10,7 @@ use App\Models\RoutineExercise;
 use App\Models\RoutinesWeekly;
 use App\Models\TrainingVolume;
 use App\Models\User;
+use Database\Factories\routineExerciseFactory;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -138,6 +139,12 @@ class CompleteRoutineController extends Controller
         ]);
     }
 
+    public function deleteRoutineUser(Request $request){
+        $routine = find($request->input('id'))->get();
+        return response()->json(['data' => ['exercise' => $routine]]);
+        $routine->delete();
+
+    }
 
     public function updateRoutineUser(Request $request)
     {
